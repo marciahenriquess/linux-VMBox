@@ -1,0 +1,75 @@
+Network File System (NFS) é um protocolo que permite a montagem de diretórios remotos no seu servidor.
+
+
+Pegamos os IP's:
+ex:
+  Máquina Servidor: 192.168.xx.xxx
+  Máquina Cliente: 192.168.xx.yyy
+  
+  
+Configurando a máquina servidor de NFS:
+
+1 – Instalando o NFS:
+ # dnf install nfs-utils
+
+
+2 - Habilitando e iniciando os serviços necessários:
+ # systemctl enable rpcbind
+ # systemctl enable nfs-server
+ # systemctl start rpcbind
+ # systemctl start nfs-server
+
+
+3 – Nas configurações do seu Linux:
+
+  Crie os diretórios no path: 
+ex: media                                     
+      # /media/nome_do_dir
+
+  Faça as seguintes permissões:
+      # chmod  -R  755  /media/nome_do_dir
+
+  Adicionando suas Pastas às configurações do NFS:    
+      # vi  /etc/exports  → é uma pasta vazia
+
+
+4 - Dentro do arquivo vazio, coloque o caminho de seu diretório que deseja compartilhar, o servidor com o ip da maquina cliente e as permissões:
+      # /media/nome_do_dir/IP_da_maquina_cliente(rw,sync,no_root_squash,no_all_squash)
+
+
+5 -	Agora reinicie o serviço de NFS: 
+ # systemctl restart nfs-server
+
+
+6 -	Liberando NFS no Firewall: 
+Caso esteja com o Firewall ativo, o que é padrão em muitos server, precisamos adicionar o serviço de NFS na public zone do Firewall.
+ # firewall-cmd --permanent --zone=public --add-service=nfs
+ # firewall-cmd --permanent --zone=public --add-service=mountd
+ # firewall-cmd --permanent --zone=public --add-service=rpc-bind
+ # firewall-cmd –reload
+
+
+7 - Vendo se a montagem foi bem sucedida:
+ # df -kh
+
+ 
+ 
+Configurando a máquina cliente de NFS:
+
+1 – Instalando:
+ # dnf  install  nfs-utils
+
+2 – Criando Pastas de Ponto de Montagem:
+Agora, vamos criar a pasta que será o ponto de montagem de seu diretório NFS remoto.
+ # mkdir   -p   /mnt/nfs/nome_do_dir
+
+3 – Vamos agora montar o compartilhamento NFS nestas pastas:
+ # mount  -t  nfs  IP_da_maquina_servidora:/media/nome_do_dir  /mnt/nfs/nome_do_dir/
+
+4 - Vamos checar se a montagem foi bem sucedida:
+  # df  -kh
+
+5 - Criando um arquivo que pode ser acessado pela maquina servidora:
+  # touch  /mnt/nfs/nome_do_dir/teste-nfs.txt
+  
+  
