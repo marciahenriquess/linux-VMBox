@@ -1,0 +1,25 @@
+Secure shell (SSH) é um protocolo que oferece de maneira segura, entre dois sistemas, o acesso de um mesmo host de modo remoto e é criado uma relação de confiança entre as máquinas.
+
+Para instalar o pacote do SSH e habilitar no Linux Oracle utiliza-se o comando: 
+ # dnf install openssh-server                             
+ # systemctl start sshd
+ # systemctl enable sshd
+
+
+Se referindo a um acesso remoto do Linux no sistema Windows:
+Após habilitar o SSH em seu sistema, para se ter esse acesso usamos ferramentas como o Putty, que é um emulador de terminal que da esse acesso remoto a servidores. 
+Colocamos "Host Name: endereço ip da nossa maquina > "Connection type: SSH" > "Port: 22" (que é a padrao do ssh e conexão tipo SSH).
+Quando damos o "Open" ele abre o terminal onde fazemos nosso login normalmente e temos assim o acesso a nossa máquina, sem estar com ela fisicamente.
+
+
+
+Já de Linux para Linux criamos relação de confiança entre as máquinas usamos os seguintes comandos:
+ # vi /etc/ssh/sshd_config > mude a porta padrão para porta alta exemplo: 22000, para que haja uma maior segurança;
+ # dnf -y install policycoreutils-python-utils
+ # semanage port -a -t ssh_port_t -p tcp 22000
+ # firewall-cmd --permanent --zone=public --add-port=22000/tcp
+ # firewall-cmd --reload
+ # systemctl restart sshd.service
+ # ssh -p22000 root@ip_da_outra_maquina
+
+
