@@ -1,1 +1,7 @@
+Quando criamos nossa máquina virtual ela vem como VLAN como padrão, para alterar o tipo de conexão da nossa máquina:
+
+1 - Desligamos a nossa máquina;
+2 - Abrimos a VMBox;
+3 - Selecionamos a nossa máquina e clicamos em "Settings";
+4 - Em "Network" selecionamos em "Attached to: Bridged Adpter".
 
