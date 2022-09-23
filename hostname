@@ -1,0 +1,3 @@
+# vi /etc/hostname    →  arquivo onde alteramos o nome.
+# ESC + wq
+# reboot
