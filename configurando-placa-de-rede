@@ -1,0 +1,19 @@
+Para configurar a placa de rede:
+ # ip a    →  para ver nome da placa de rede;
+ # vi /etc/sysconfig/network-scripts/ifcfg-nomedaplaca     →  para alterar o arquivo de configuração;
+ 
+ Mudamos o campo: 
+ BOOTPROTO=none
+ 
+ Adicionamos os campos:
+ IPADDR=
+ PREFIX=
+ GATEWAY=
+ DNS1=
+ DNS2=
+ NETMASK=
+ BROADCAST=
+ 
+ Damos o comando para ser salvo as alterações: "ESC + wq".
+ 
+  # reboot → para reiniciar o sistema.
